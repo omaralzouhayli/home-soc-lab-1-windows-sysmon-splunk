@@ -1,0 +1,8 @@
+index=endpoint sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" "QueryName"
+| rex field=_raw "Data Name='Image'>(?<Image>[^<]+)"
+| rex field=_raw "Data Name='User'>(?<User>[^<]+)"
+| rex field=_raw "Data Name='QueryName'>(?<QueryName>[^<]+)"
+| rex field=_raw "Data Name='QueryResults'>(?<QueryResults>[^<]+)"
+| where Image LIKE "%powershell.exe%"
+| stats values(QueryName) as domains values(QueryResults) as ip_addresses count by _time host User Image
+| sort - _time

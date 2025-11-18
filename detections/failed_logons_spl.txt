@@ -1,0 +1,5 @@
+index=endpoint sourcetype="WinEventLog:Security" EventCode=4625
+| bin _time span=5m
+| stats count as failed_count values(IpAddress) as ip by _time, host, Account_Name
+| where failed_count >= 4
+| sort - _time

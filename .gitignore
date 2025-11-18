@@ -1,0 +1,25 @@
+# Ignore large / local-only lab artifacts
+
+# OS & editor cruft
+Thumbs.db
+desktop.ini
+.DS_Store
+*.tmp
+*.bak
+~$*
+
+# ISO images (large, licensed OS media)
+*.iso
+iso/
+
+# VMware virtual machine files (large, local-only)
+VMs/
+*.vmdk
+*.vmx
+*.nvram
+*.vmem
+*.lck
+*.log
+
+# Git / tooling
+.git/
