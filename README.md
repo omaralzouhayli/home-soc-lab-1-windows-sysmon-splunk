@@ -81,7 +81,7 @@ Folder: `incident_reports\`
 
 File: `lab-journal.md`
 
-- Day-by-day notes of how the lab was built:
+- Notes of how the lab was built:
   - VM & ISO setup
   - OOBE / account challenges and decisions
   - Sysmon install and config
@@ -105,7 +105,6 @@ Key images (for documentation / GitHub):
 - `06_detection2_suspicious_powershell_search.png` – Suspicious PowerShell search.
 - `07_detection3_dns_powershell_search.png` – DNS from PowerShell search.
 
-
 (Names may vary slightly; these are examples of the intended content.)
 
 ---
@@ -116,7 +115,8 @@ Key images (for documentation / GitHub):
 D:\Home-SOC-Lab
   README.md
   lab-journal.md
-  detections  incident_reports  screenshots  iso\          (Windows ISO – local only, NOT uploaded to GitHub)
+  detections  incident_reports  screenshots  lab2-endpoint-hygiene\
+  iso\          (Windows ISO – local only, NOT uploaded to GitHub)
   VMs\          (VMware files – local only, NOT uploaded to GitHub)
 ```
 
@@ -124,17 +124,9 @@ D:\Home-SOC-Lab
 
 ---
 
-## How this maps to a junior SOC / Endpoint role
+## Additional Labs
 
-- **Log sources:** Windows Security log + Sysmon
-- **SIEM skills:** Splunk searches, indexes, scheduled alerts, basic field extraction
-- **Detection engineering:**
-  - Brute-force detection on Event ID 4625
-  - Process-creation-based detection for risky PowerShell usage
-  - DNS-based detection focused on PowerShell as a client process
-- **IR skills:** Writing a structured PICERL report for a suspicious PowerShell event
-
-Future labs will extend this with:
-
-- More detections (e.g., suspicious services, persistence, lateral movement)
-- Additional tools (Defender, Sentinel / KQL, EDR-style workflows)
+- **Lab 2 – Endpoint Hygiene & Microsoft Defender** (`lab2-endpoint-hygiene/`)
+  - Reuses `WIN-ENDPOINT-01` from Lab 1.
+  - Adds `Get-EndpointHygiene.ps1` to check Defender status, signature/scan recency, firewall profiles, and ransomware protection.
+  - Includes a short endpoint hygiene checklist and Defender malware alert triage notes, plus screenshots and a build journal.
