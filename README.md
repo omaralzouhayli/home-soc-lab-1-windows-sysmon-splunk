@@ -1,132 +1,92 @@
-# Home SOC Lab 1 – Windows Endpoint + Sysmon + Splunk
+# Home SOC Lab – Windows Endpoint & Blue-Team Practice
 
-This lab is a small **“Home SOC” mini-stack** built on a single Windows 11 VM:
+This repo is my personal **Home SOC** playground. I’m using a single Windows 11 VM as an “employee laptop” and building small labs around it to practice:
 
-- **Endpoint:** Windows 11 VM (`WIN-ENDPOINT-01`) acting like an employee laptop.
-- **Telemetry:** Windows Security logs + Sysmon (SwiftOnSecurity config).
-- **SIEM:** Splunk Enterprise Free running on the same VM.
-- **Focus:** Junior SOC / Endpoint / Detection Engineer skills:
-  - Collecting Windows + Sysmon logs
-  - Writing detections in SPL
-  - Simulating safe attacker behavior
-  - Writing a PICERL incident report
+- Endpoint logging and detections  
+- Defender hygiene and basic hardening  
+- Vulnerability scanning and remediation
 
-> This is Lab 1 in a series of small blue-team labs I’m building while studying **ISC2 CC** and **Security+**.
+I’m doing this while studying **ISC2 CC** and **CompTIA Security+ (SY0‑701)**, so the labs stay close to what a junior SOC / endpoint / vuln‑management role would actually do.
 
 ---
 
-## Lab Architecture
+## Labs in this repo
 
-- **Host machine:** Windows (runs VMware Workstation Pro)
-- **Guest VM:** Windows 11 Pro (`WIN-ENDPOINT-01`)
-- **On the VM:**
-  - Sysmon (`Sysmon64.exe`) with SwiftOnSecurity config
-  - Splunk Enterprise Free (local install)
-  - Windows event forwarding into Splunk index `endpoint`
+Right now there are **three labs**:
 
-Data flow (all on one box for simplicity):
+1. **Lab 1 – Windows endpoint + Sysmon + Splunk**  *(root of the repo)*  
+   - Windows 11 VM `WIN-ENDPOINT-01` acting as a user workstation  
+   - Sysmon (SwiftOnSecurity config) writing into Windows Event Log  
+   - Splunk Enterprise Free on the same VM  
+   - A few SPL detections (failed logons, suspicious PowerShell, DNS from PowerShell)  
+   - One PICERL incident report based on a “suspicious PowerShell” alert  
 
-`Windows 11 endpoint → Windows Event Log + Sysmon → Splunk index=endpoint → Searches & Alerts`
+2. **Lab 2 – Endpoint hygiene + Microsoft Defender**  (`lab2-endpoint-hygiene/`)  
+   - Reuses `WIN-ENDPOINT-01` from Lab 1  
+   - PowerShell script to check Defender status, signatures, scan history, firewall, and ransomware protection  
+   - Short hygiene checklist and notes on how I would triage Defender alerts
 
----
+3. **Lab 3 – Vulnerability management with Nessus Essentials**  (`lab3-vulnerability-management/`)  
+   - Nessus Essentials runs on the Windows host  
+   - Targets the same VM `WIN-ENDPOINT-01` over VMware NAT  
+   - Baseline unauthenticated scan → credentialed scan → remediation → rescan  
+   - Focus on one real High Windows finding (WinVerifyTrust / `EnableCertPaddingCheck`) and a set of VMware Tools Medium findings, plus Windows Update hygiene
 
-## Detections Implemented (SPL)
-
-All SPL queries are stored under `detections\`.
-
-1. **Repeated failed logons (possible brute force)**
-   - File: `detections\failed_logons_spl.txt`
-   - Data: `WinEventLog:Security` (EventCode 4625)
-   - Logic: 4+ failed logons for the same account on the same host within 5 minutes
-   - Alert name: **Possible brute force - multiple failed logons**
-
-2. **Suspicious PowerShell execution**
-   - File: `detections\suspicious_powershell_spl.txt`
-   - Data: Sysmon Process Create (`XmlWinEventLog:Microsoft-Windows-Sysmon/Operational`)
-   - Logic: `powershell.exe` with high-risk flags:
-     - `-ExecutionPolicy Bypass`, `-EncodedCommand`, `-WindowStyle Hidden`, or `-nop`
-   - Alert name: **Suspicious PowerShell execution**
-
-3. **DNS queries from PowerShell (unusual outbound activity)**
-   - File: `detections\unusual_dns_powershell_spl.txt`
-   - Data: Sysmon DNS query events (Event ID 22)
-   - Logic: DNS queries where the **Image** is `powershell.exe`
-   - Alert name: **Unusual DNS query from PowerShell**
-
-All three detections are configured as **scheduled alerts** in Splunk that log an event to the `main` index when they fire.
+Each lab has its **own README and journal** inside its folder. The root README you’re reading now is just an overview so people don’t get lost.
 
 ---
 
-## Incident Reporting (PICERL)
+## Lab 1 details (root of the repo)
 
-Folder: `incident_reports\`
+Lab 1 lives directly at the top level of this repo.
 
-- **IR-001_Suspicious_PowerShell_PICERL.md**
-  - Incident based on the *Suspicious PowerShell execution* detection.
-  - Follows **PICERL**:
-    - Preparation  
-    - Identification  
-    - Containment  
-    - Eradication  
-    - Recovery  
-    - Lessons Learned
-  - Includes:
-    - Sysmon event details (Image, User, full command line)
-    - What containment/eradication would look like in a real SOC
-    - Lab-specific notes and next steps
+Key pieces:
 
----
+- `lab-journal.md` – step‑by‑step notes for building the lab:  
+  VM creation, Sysmon install, Splunk setup, index + inputs, detections, and the PICERL report.
+- `detections/` – plain‑text SPL searches for:
+  - repeated failed logons  
+  - suspicious PowerShell flags  
+  - DNS queries coming from PowerShell
+- `incident_reports/` – incident write‑ups (PICERL format).  
+- `screenshots/` – evidence used in the README and journal (Sysmon events, Splunk searches, alert config, etc.).
 
-## Build Journal
+If you want to **rebuild Lab 1**, start with:
 
-File: `lab-journal.md`
-
-- Notes of how the lab was built:
-  - VM & ISO setup
-  - OOBE / account challenges and decisions
-  - Sysmon install and config
-  - Splunk install, index creation, and `inputs.conf` changes
-  - Test activity + detections + incident report
-- This is a **full walkthrough** for anyone who wants to recreate the lab.
+1. Read `lab-journal.md` from top to bottom.  
+2. Use the SPL files in `detections/` to create alerts in your own Splunk instance.  
+3. Open the PICERL report in `incident_reports/` to see how I turned one alert into a small incident story.
 
 ---
 
-## Screenshots
+## Folder structure (high level)
 
-Folder: `screenshots\`
-
-Key images (for documentation / GitHub):
-
-- `01_folder_structure.png` – Lab folder layout on the host.
-- `02_sysmon_eventviewer.png` – Sysmon Operational log showing events.
-- `03_splunk_index_endpoint.png` – Splunk index / sourcetypes view.
-- `04_detection1_failed_logons_search.png` – Failed logon detection search.
-- `05_detection1_alert_config.png` – Brute-force alert configuration.
-- `06_detection2_suspicious_powershell_search.png` – Suspicious PowerShell search.
-- `07_detection3_dns_powershell_search.png` – DNS from PowerShell search.
-
-(Names may vary slightly; these are examples of the intended content.)
-
----
-
-## Folder Structure (local)
+On my machine the root looks like this:
 
 ```text
 D:\Home-SOC-Lab
-  README.md
-  lab-journal.md
-  detections  incident_reports  screenshots  lab2-endpoint-hygiene\
-  iso\          (Windows ISO – local only, NOT uploaded to GitHub)
-  VMs\          (VMware files – local only, NOT uploaded to GitHub)
+  README.md                # this overview
+  lab-journal.md           # Lab 1 build journal
+  detections\             # Lab 1 SPL queries
+  incident_reports\       # Lab 1 incident reports
+  screenshots\            # Lab 1 screenshots
+
+  lab2-endpoint-hygiene\  # Lab 2 – Defender hygiene
+  lab3-vulnerability-management\  # Lab 3 – Nessus vuln management
+
+  iso\                    # Windows ISO (local only, NOT in GitHub)
+  VMs\                    # VMware VM files (local only, NOT in GitHub)
 ```
 
-> When publishing to GitHub, the `iso\` and `VMs\` folders should be **excluded** (they are large and contain OS/licensed files).
+Only the folders that are safe and reasonably small go to GitHub.  
+The `iso\` and `VMs\` directories stay local and are covered by `.gitignore`.
 
 ---
 
-## Additional Labs
+## How to use this repo
 
-- **Lab 2 – Endpoint Hygiene & Microsoft Defender** (`lab2-endpoint-hygiene/`)
-  - Reuses `WIN-ENDPOINT-01` from Lab 1.
-  - Adds `Get-EndpointHygiene.ps1` to check Defender status, signature/scan recency, firewall profiles, and ransomware protection.
-  - Includes a short endpoint hygiene checklist and Defender malware alert triage notes, plus screenshots and a build journal.
+- If you’re curious about **detections and log analysis**, focus on **Lab 1**.  
+- If you want quick **endpoint health checks**, look at **Lab 2**.  
+- If you care about **patching and vuln management**, open **Lab 3**.
+
+You don’t have to follow my order. Each lab can stand on its own, but all three share the same Windows VM, which makes it feel like one small, growing environment instead of three random demos.
