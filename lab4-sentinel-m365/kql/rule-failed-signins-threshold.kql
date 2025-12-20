@@ -1,0 +1,16 @@
+// Lab 4 – Phase 4 analytics rule query (Microsoft Sentinel)
+// Rule: "LAB4 - Multiple Failed Sign-ins (Entra)"
+// Purpose: alert when one user has many failed sign-ins in a short window.
+// Entity mapping expected:
+// - AccountCustomEntity (UserPrincipalName)
+// - IPCustomEntity (IPAddress)
+
+let threshold = 5;
+SigninLogs
+| where TimeGenerated >= ago(10m)
+| where ResultType != 0
+| summarize FailedSignins = count(), arg_max(TimeGenerated, IPAddress, AppDisplayName) by UserPrincipalName
+| where FailedSignins >= threshold
+| extend AccountCustomEntity = UserPrincipalName
+| extend IPCustomEntity = IPAddress
+| project TimeGenerated, UserPrincipalName, FailedSignins, IPAddress, AppDisplayName, AccountCustomEntity, IPCustomEntity

@@ -1,0 +1,19 @@
+// Lab 4 – Phase 3 (Verification) – Entra log ingestion check
+// Goal: confirm AuditLogs and SigninLogs are flowing into the workspace.
+
+//////////////////////////////////////////////////////////////
+// AuditLogs: show most recent events
+//////////////////////////////////////////////////////////////
+AuditLogs
+| where TimeGenerated >= ago(7d)
+| sort by TimeGenerated desc
+| take 20
+
+
+//////////////////////////////////////////////////////////////
+// SigninLogs: show most recent events
+//////////////////////////////////////////////////////////////
+SigninLogs
+| where TimeGenerated >= ago(7d)
+| sort by TimeGenerated desc
+| take 20

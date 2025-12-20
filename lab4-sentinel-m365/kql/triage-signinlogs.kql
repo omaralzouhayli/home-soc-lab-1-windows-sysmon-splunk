@@ -1,0 +1,41 @@
+// Lab 4 – Phase 5 (Triage) – Entra failed sign-ins investigation
+// Purpose: confirm pattern, drill into events, and check if any successes occurred.
+
+//////////////////////////////////////////////////////////////
+// Query 1 — Failures summary (user + IP + app)
+//////////////////////////////////////////////////////////////
+SigninLogs
+| where TimeGenerated >= ago(7d)
+| where ResultType != 0
+| summarize FailCount=count() by UserDisplayName, IPAddress, AppDisplayName
+| sort by FailCount desc
+
+
+//////////////////////////////////////////////////////////////
+// Query 2 — Timeline view (what happened, most recent first)
+//////////////////////////////////////////////////////////////
+SigninLogs
+| where TimeGenerated >= ago(7d)
+| where ResultType != 0
+| project TimeGenerated, UserDisplayName, UserPrincipalName, ResultType, ResultDescription, IPAddress, AppDisplayName
+| sort by TimeGenerated desc
+
+
+//////////////////////////////////////////////////////////////
+// Query 3 — Did it ever succeed? (successes for same dimensions)
+//////////////////////////////////////////////////////////////
+SigninLogs
+| where TimeGenerated >= ago(7d)
+| where ResultType == 0
+| summarize SuccessCount=count() by UserDisplayName, IPAddress, AppDisplayName
+| sort by SuccessCount desc
+
+
+//////////////////////////////////////////////////////////////
+// Query 4 — Outcome counts by user (Success vs Failure)
+//////////////////////////////////////////////////////////////
+SigninLogs
+| where TimeGenerated >= ago(7d)
+| extend Outcome = iff(ResultType == 0, "Success", "Failure")
+| summarize Count=count() by UserDisplayName, Outcome
+| sort by UserDisplayName asc, Outcome asc
