@@ -1,6 +1,6 @@
-# Home SOC Lab 2 – Endpoint Hygiene & Microsoft Defender
+# it-support Lab 2 – Endpoint Hygiene & Microsoft Defender
 
-This is the second lab in the **Home SOC** series.  
+This is the second lab in the **it-support** series.  
 Lab 1 focused on Windows logs, Sysmon, Splunk, and detections (described in the root `README.md`).
 
 Lab 2 stays on the same Windows 11 VM (`WIN-ENDPOINT-01`) but shifts the focus to **endpoint hygiene** and **Microsoft Defender Antivirus**. The goal is to have something you can actually run on a workstation during basic triage:
