@@ -1,6 +1,6 @@
 # Windows Endpoint Support Lab Portfolio (PowerShell, Defender, Nessus, Log Review)
 
-This repo is my personal **Home SOC** project. I use one Windows 11 VM as an “employee laptop” and build small labs around it to practice the kind of work a junior SOC / Security Analyst / M365 Security role does:
+This repo is my personal **Home Lab Portfolio** project. I use one Windows 11 VM as an “employee laptop” and build small labs around it to practice the kind of work a junior SOC / Security Analyst / M365 Security role does:
 
 - Collecting and reviewing endpoint and identity telemetry  
 - Writing detections and triage queries (SPL / KQL)  
