@@ -1,6 +1,6 @@
 # Windows Endpoint Support Lab Portfolio (PowerShell, Defender, Nessus, Log Review)
 
-This repo is my personal **Home Lab Portfolio** project. I use one Windows 11 VM as an “employee laptop” and build small labs around it to practice the kind of work a junior SOC / Security Analyst / M365 Security role does:
+This repo is my personal **Home Lab Portfolio** project. I use one Windows 11 VM as an “employee laptop” and build small labs around it to practice the kind of work a junior IT support / Security Analyst / M365 Security role does:
 
 - Collecting and reviewing endpoint and identity telemetry  
 - Writing detections and triage queries (SPL / KQL)  
@@ -58,7 +58,7 @@ Each lab has its **own README and journal** inside its folder.
 On my machine the root looks like this:
 
 ```text
-D:\Home-SOC-Lab
+D:\Hit-support-lab
   README.md
   lab-journal.md
 
