@@ -2,7 +2,7 @@
 
 ## Setup & Structure
 
-- Reusing the same repo and root folder from Lab 1: `D:\Home-SOC-Lab\`.
+- Reusing the same repo and root folder from Lab 1: `D:\it-support-lab\`.
 - Created the Lab 2 folder structure:
 
   - `lab2-endpoint-hygiene\scripts\`
