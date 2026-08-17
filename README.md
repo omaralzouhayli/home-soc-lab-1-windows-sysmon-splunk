@@ -1,37 +1,37 @@
-# Windows Endpoint Support Lab Portfolio (PowerShell, Defender, Nessus, Log Review)
+# Security Operations and Endpoint Security Lab Portfolio
 
-This repo is my personal **Home Lab Portfolio** project. I use one Windows 11 VM as an “employee laptop” and build small labs around it to practice the kind of work a junior IT support / Security Analyst / M365 Security role does:
+I built these four labs to practice entry-level security operations, endpoint security, and vulnerability management. The environment uses a Windows 11 VM plus Microsoft Sentinel and Entra ID.
 
-- Collecting and reviewing endpoint and identity telemetry  
-- Writing detections and triage queries (SPL / KQL)  
-- Investigating alerts/incidents and documenting decisions  
-- Basic endpoint hygiene and vulnerability remediation
+- Collect Windows endpoint and identity telemetry
+- Write detections and triage queries in SPL and KQL
+- Investigate test alerts and document decisions
+- Check endpoint security controls with PowerShell and Microsoft Defender
+- Scan, remediate, and rescan vulnerabilities with Nessus
 
-**Certifications:** ISC2 Certified in Cybersecurity (CC), CompTIA Security+ (SY0‑701)  
-**Next:** Microsoft SC‑200 (Security Operations Analyst)
+**Related certifications:** CompTIA Security+ (SY0-701), ISC2 Certified in Cybersecurity (CC)
 
 ---
 
 ## Labs in this repo
 
-1. **Lab 1 – Windows endpoint + Sysmon + Splunk** *(root of the repo)*  
+1. **Lab 1 - Windows monitoring with Sysmon and Splunk** *(root of the repo)*
    - Windows 11 VM `WIN-ENDPOINT-01`  
    - Sysmon (SwiftOnSecurity config) + Windows Security logs  
    - Splunk Enterprise Free ingestion  
    - SPL detections (failed logons, suspicious PowerShell, DNS from PowerShell)  
    - One PICERL incident report based on a lab alert
 
-2. **Lab 2 – Endpoint hygiene + Microsoft Defender** (`lab2-endpoint-hygiene/`)  
+2. **Lab 2 - Endpoint security with PowerShell and Microsoft Defender** (`lab2-endpoint-hygiene/`)
    - PowerShell script `Get-EndpointHygiene.ps1` to check Defender status, firewall profiles, and ransomware protection  
    - EICAR test to generate a Defender alert  
    - Hygiene + alert triage runbooks
 
-3. **Lab 3 – Vulnerability management with Nessus Essentials** (`lab3-vulnerability-management/`)  
+3. **Lab 3 - Vulnerability management with Nessus Essentials** (`lab3-vulnerability-management/`)
    - Credentialed Nessus scans of `WIN-ENDPOINT-01`  
    - Before/after comparison and remediation notes  
    - Focus on WinVerifyTrust CVE‑2013‑3900 mitigation and VMware Tools findings
 
-4. **Lab 4 – Microsoft Sentinel + Entra ID incident handling** (`lab4-sentinel-m365/`)  
+4. **Lab 4 - Identity monitoring and incident handling with Microsoft Sentinel** (`lab4-sentinel-m365/`)
    - Log Analytics workspace + Microsoft Sentinel  
    - Entra ID AuditLogs/SigninLogs ingestion  
    - Scheduled analytics rule for repeated failed sign-ins  
@@ -55,24 +55,24 @@ Each lab has its **own README and journal** inside its folder.
 
 ## Folder structure (high level)
 
-On my machine the root looks like this:
+The repository is organized like this:
 
 ```text
-D:\Hit-support-lab
+it-support-lab-portfolio/
   README.md
   lab-journal.md
 
-  detections\
-  incident_reports\
-  screenshots\
+  detections/
+  incident_reports/
+  screenshots/
 
-  lab2-endpoint-hygiene\
-  lab3-vulnerability-management\
-  lab4-sentinel-m365\
+  lab2-endpoint-hygiene/
+  lab3-vulnerability-management/
+  lab4-sentinel-m365/
 
-  iso\    # local only (NOT in GitHub)
-  VMs\    # local only (NOT in GitHub)
+  iso/    # local only (not in GitHub)
+  VMs/    # local only (not in GitHub)
 ```
 
-Only folders that are safe and reasonably small go to GitHub.  
+Only folders that are safe and reasonably small go to GitHub.
 The `iso\` and `VMs\` directories stay local and are covered by `.gitignore`.

@@ -1,7 +1,6 @@
 # Lab 4 – Microsoft Sentinel & M365 Defender – Lab Journal
 
-## Basic info
-- Start date: (fill)
+## Environment
 - Endpoint: `WIN-ENDPOINT-01` (Windows 11 VM)
 - Cloud: Azure (Log Analytics + Microsoft Sentinel)
 
@@ -16,9 +15,6 @@
 **What I did**
 - Created the `lab4-sentinel-m365` folder and subfolders in my Home SOC repo.
 - Wrote the initial README with goals and structure.
-
-Notes:
-- (Add any small issues or thoughts here.)
 
 ---
 

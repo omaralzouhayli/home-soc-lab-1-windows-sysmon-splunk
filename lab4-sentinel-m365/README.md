@@ -30,7 +30,7 @@ Set up a small Microsoft security monitoring environment with **Microsoft Sentin
   - `rule-failed-signins-threshold.kql` – analytics rule query (failed sign-ins threshold)
   - `triage-signinlogs.kql` – triage KQL pack (4 queries)
 - `runbooks/`
-  - `sentinel-triage-failed-signins.md` – simple SOC runbook for this alert type
+  - `sentinel-triage-failed-signins.md` – SOC triage runbook for this alert type
 - `screenshots/` – key evidence (sanitized)
 
 ## Evidence screenshots (key ones)

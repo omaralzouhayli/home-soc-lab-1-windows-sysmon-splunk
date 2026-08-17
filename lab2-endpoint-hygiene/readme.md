@@ -1,7 +1,6 @@
-# IT-support Lab 2 – Endpoint Hygiene & Microsoft Defender
+# Lab 2 - Endpoint Security with PowerShell and Microsoft Defender
 
-This is the second lab in the **IT-support** series.  
-Lab 1 focused on Windows logs, Sysmon, Splunk, and detections (described in the root `README.md`).
+This lab builds on the Windows monitoring environment from Lab 1. Lab 1 focused on Windows logs, Sysmon, Splunk, and detections (described in the root `README.md`).
 
 Lab 2 stays on the same Windows 11 VM (`WIN-ENDPOINT-01`) but shifts the focus to **endpoint hygiene** and **Microsoft Defender Antivirus**. The goal is to have something you can actually run on a workstation during basic triage:
 
@@ -136,4 +135,4 @@ Two short documents turn this lab into something reusable:
   - Triggering scans/updates if needed
   - Documenting and escalating when appropriate
 
-Together with the script and screenshots, these files show a basic but realistic workflow for looking at Defender alerts and hygiene on a Windows 11 workstation.
+Together with the script and screenshots, these files document a repeatable workflow for reviewing Defender alerts and endpoint security controls on a Windows 11 workstation.

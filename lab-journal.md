@@ -1,6 +1,6 @@
 # Home SOC Lab 1 – Build Journal
 
-This journal explains how I built **Home SOC Lab 1**, which focuses on Windows endpoint telemetry, Splunk, and a few simple detections.
+This journal explains how I built **Home SOC Lab 1**, which focuses on Windows endpoint telemetry, Splunk, and three SPL detections.
 
 - Endpoint: Windows 11 VM (`WIN-ENDPOINT-01`)
 - Telemetry: Windows Security logs + Sysmon (SwiftOnSecurity config)
@@ -184,7 +184,7 @@ Inside `WIN-ENDPOINT-01`:
 
   ```text
   Username: splunkadmin
-  Password: (stored in private notes)
+  Password omitted from this repository
   ```
 
 ---
