@@ -58,7 +58,7 @@ Each lab has its **own README and journal** inside its folder.
 The repository is organized like this:
 
 ```text
-it-support-lab-portfolio/
+cybersecurity-lab-portfolio/
   README.md
   lab-journal.md
 
